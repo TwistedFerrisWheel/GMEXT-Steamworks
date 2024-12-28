@@ -2,6 +2,9 @@
 **/.vs/
 **/.vsc/
 
+# Clion
+*.idea
+
 # Common extensions
 **/*.exp
 **/*.ilk
