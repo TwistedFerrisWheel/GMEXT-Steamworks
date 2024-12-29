@@ -13,5 +13,5 @@ YYEXPORT void /*double*/ amaranth_add(RValue& Result, CInstance* selfinst, CInst
     double secondNum = YYGetReal(arg, 1);
 
     Result.kind = VALUE_REAL;
-    Result.val = firstNum+secondNum;
+    Result.val = (double) firstNum+secondNum;
 }
