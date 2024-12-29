@@ -7,11 +7,13 @@
 #include "YYRValue.h"
 #include "steam_common.h"
 
+
 YYEXPORT void steam_netsock_init(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg)//() 
 {
 	// You plan to use networking in your app. This should be called on the first frame.
 	
 	// Needs to call InitRelayNetworkAccess
+	SteamNetworkingUtils()->InitRelayNetworkAccess();
 
 	Result.kind = VALUE_BOOL;
 	Result.val = true;
