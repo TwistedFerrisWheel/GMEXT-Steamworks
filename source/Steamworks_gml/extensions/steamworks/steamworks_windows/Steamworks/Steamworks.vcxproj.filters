@@ -93,6 +93,9 @@
     <ClCompile Include="..\..\steamworks_cpp\pch.cpp">
       <Filter>Header Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\steamworks_cpp\GMLSteam\amaranth_test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\steamworks_cpp\DesktopExtensionTools.h">

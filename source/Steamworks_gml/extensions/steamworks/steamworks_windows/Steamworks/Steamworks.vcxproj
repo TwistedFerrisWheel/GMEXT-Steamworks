@@ -36,6 +36,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\steamworks_cpp\DesktopExtensionTools.cpp" />
     <ClCompile Include="..\..\steamworks_cpp\dllmain.cpp" />
+    <ClCompile Include="..\..\steamworks_cpp\GMLSteam\amaranth_test.cpp" />
     <ClCompile Include="..\..\steamworks_cpp\GMLSteam\gml_glue.cpp" />
     <ClCompile Include="..\..\steamworks_cpp\GMLSteam\steam_apps.cpp" />
     <ClCompile Include="..\..\steamworks_cpp\GMLSteam\steam_callbacks.cpp" />
