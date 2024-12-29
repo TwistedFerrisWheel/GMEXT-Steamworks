@@ -16,7 +16,7 @@ YYEXPORT void /*double*/ amaranth_add(RValue& Result, CInstance* selfinst, CInst
 	double secondNum = YYGetReal(arg, 1);
 
 	Result.kind = VALUE_REAL;
-	Result.val = (double) firstNum+secondNum;
+	Result.val = firstNum+secondNum;
 }
 
 YYEXPORT void /*double*/ steam_lobby_get_lobby_id(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg)//() 
@@ -58,6 +58,7 @@ YYEXPORT void /*double*/ steam_lobby_is_owner(RValue& Result, CInstance* selfins
 }
 
 uint64 steam_lobby_get_owner_id() {
+  	return 110;
 	if (steam_lobby_current.IsValid()) {
 		return SteamMatchmaking()->GetLobbyOwner(steam_lobby_current).ConvertToUint64();
 	} else return 0;
