@@ -18,9 +18,6 @@
     <ClCompile Include="..\..\steamworks_cpp\GMLSteam\steam_init.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\steamworks_cpp\GMLSteam\steam_init_new.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\steamworks_cpp\GMLSteam\steam_input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -93,7 +90,7 @@
     <ClCompile Include="..\..\steamworks_cpp\pch.cpp">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\steamworks_cpp\GMLSteam\amaranth_test.cpp">
+    <ClCompile Include="steam_networking_sockets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

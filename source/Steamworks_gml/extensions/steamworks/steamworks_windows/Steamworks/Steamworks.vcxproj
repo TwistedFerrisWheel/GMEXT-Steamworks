@@ -36,7 +36,6 @@
   <ItemGroup>
     <ClCompile Include="..\..\steamworks_cpp\DesktopExtensionTools.cpp" />
     <ClCompile Include="..\..\steamworks_cpp\dllmain.cpp" />
-    <ClCompile Include="..\..\steamworks_cpp\GMLSteam\amaranth_test.cpp" />
     <ClCompile Include="..\..\steamworks_cpp\GMLSteam\gml_glue.cpp" />
     <ClCompile Include="..\..\steamworks_cpp\GMLSteam\steam_apps.cpp" />
     <ClCompile Include="..\..\steamworks_cpp\GMLSteam\steam_callbacks.cpp" />
@@ -45,7 +44,6 @@
     <ClCompile Include="..\..\steamworks_cpp\GMLSteam\steam_funcs.cpp" />
     <ClCompile Include="..\..\steamworks_cpp\GMLSteam\steam_glue.cpp" />
     <ClCompile Include="..\..\steamworks_cpp\GMLSteam\steam_init.cpp" />
-    <ClCompile Include="..\..\steamworks_cpp\GMLSteam\steam_init_new.cpp" />
     <ClCompile Include="..\..\steamworks_cpp\GMLSteam\steam_input.cpp" />
     <ClCompile Include="..\..\steamworks_cpp\GMLSteam\steam_inventory.cpp" />
     <ClCompile Include="..\..\steamworks_cpp\GMLSteam\steam_lobby_chat.cpp" />
@@ -63,6 +61,7 @@
     <ClCompile Include="..\..\steamworks_cpp\GMLSteam\steam_workshop.cpp" />
     <ClCompile Include="..\..\steamworks_cpp\GMLSteam\steam_timeline.cpp" />
     <ClCompile Include="..\..\steamworks_cpp\pch.cpp" />
+    <ClCompile Include="steam_networking_sockets.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
