@@ -10,6 +10,15 @@
 
 #pragma region Current lobby
 
+YYEXPORT void /*double*/ amaranth_add(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg)//(double auto_accept)
+{
+	double firstNum = YYGetReal(arg, 0);
+	double secondNum = YYGetReal(arg, 1);
+
+	Result.kind = VALUE_REAL;
+	Result.val = (double) firstNum+secondNum;
+}
+
 YYEXPORT void /*double*/ steam_lobby_get_lobby_id(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg)//() 
 {
 	Result.kind = VALUE_INT64;
