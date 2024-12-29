@@ -5,17 +5,15 @@ This repository was created with the intent of presenting users with the latest 
 
 This extension will work on Windows, macOS and Linux.
 
+## How to Contribute
+
 SOURCE CODE: `source/steamworks_gml/extensions/steamworks/steamworks_cpp/`
 
-VISUAL STUDIO PROJECT: `source/steamworks_gml/extensions/steamworks/steamworks_windows/`
+Edit these files and then build.
 
-XCODE PROJECT: `source/steamworks_gml/extensions/steamworks/Steamworks_macos/`
+## How to Build
 
-LINUX BUILD SCRIPTS: `source/steamworks_gml/extensions/steamworks/steamworks_linux/`
-
-After compilation the exported dll/dylib/so file is automatically copied into the extension folder inside the included GameMaker project folder.
-
-## Requirements
+Building requires you have each OS that you plan to build for.
 
 In order to compile for Windows/macOS/Linux you are required to [download the Steam SDK v1.61](https://partner.steamgames.com/dashboard) and place it inside `source/Steamworks_sdk/`
 
@@ -28,6 +26,40 @@ In order to compile for Windows/macOS/Linux you are required to [download the St
 
 > [!IMPORTANT]
 > Version 2.1.0 is requires Steamworks SDK version v1.61 and won't work correctly with previous versions of the SDK. If for any reason you need to keep using a previous SDK version please refrain from updating to the v2.1.0 version.
+
+Once ready, follow these stems per OS.
+
+### Windows
+
+VISUAL STUDIO PROJECT: `source/steamworks_gml/extensions/steamworks/steamworks_windows/`
+
+Download the latest visual studio (2022 at the time of writing) and hit build. This will create a steamworks_x64.dll file.
+
+### MacOS
+
+XCODE PROJECT: `source/steamworks_gml/extensions/steamworks/Steamworks_macos/`
+
+I don't have a mac, please update this if you know. This will create a steamworks.dylib file.
+
+### Linux
+
+LINUX BUILD SCRIPTS: `source/steamworks_gml/extensions/steamworks/steamworks_linux/`
+
+* CD to the `source` folder. 
+* Give approprite read/write permissions to the child folders
+* Run `./steamworks_gml/extensions/steamworks/steamworks_linux/build_linux64.sh`
+* This will create a steamworks.so file.
+
+### After Building
+
+The building process automatically puts the files in a place that are usable in the provided example project. When ready to export to your project:
+* Open the example project
+* Navigate to the `Steamworks/Steamworks` extention
+* Update / Add any functions needed (Click the hamburger menu to add a new function)
+* When satisfied, go to `Tools > Create Local Package`, and add the `Steamworks` folder. Fill out the details however and click OK
+* In your project, click `Tools > Import Local Package` and import the package you just created.
+
+This should get your edited code into your project.
 
 ## Documentation
 
