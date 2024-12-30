@@ -11,19 +11,22 @@
 YYEXPORT void steam_netsock_init(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg)//() 
 {
 	// You plan to use networking in your app. This should be called on the first frame.
+	// https://partner.steamgames.com/doc/api/ISteamNetworkingUtils#InitRelayNetworkAccess
 	
-	// Needs to call InitRelayNetworkAccess
 	SteamNetworkingUtils()->InitRelayNetworkAccess();
 
 	Result.kind = VALUE_BOOL;
 	Result.val = true;
 }
 
-YYEXPORT void steam_netsock_create_listen_socket(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg)//() 
+YYEXPORT void steam_netsock_create_socket(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg)//() 
 {
 	// https://partner.steamgames.com/doc/api/ISteamNetworkingSockets#CreateListenSocketP2P
+	// https://partner.steamgames.com/doc/api/steamnetworkingtypes#SteamNetworkingConfigValue_t
 
-	// Code Update Needed
+	// I'm unsure how to create a SteamNetworkingConfigValue_t
+	SteamNetworkingConfigValue_t listen_socket_config = {};
+	SteamNetworkingSockets()->CreateListenSocketP2P(0, 0, &listen_socket_config);
 
 	// Results Update Needed
 	Result.kind = VALUE_BOOL;
