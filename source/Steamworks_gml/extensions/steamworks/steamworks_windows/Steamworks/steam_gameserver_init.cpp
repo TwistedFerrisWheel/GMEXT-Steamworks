@@ -3,7 +3,7 @@
 #include "steam_api.h"
 #include "Extension_Interface.h"
 #include "YYRValue.h"
-#include "steam_common.h"
+#include "steam_gameserver.h"
 
 #include <filesystem>
 #include <string>
@@ -12,44 +12,47 @@
 
 #include "DesktopExtensionTools.h"
 
-int requestInd = 0;
-int getAsyncRequestInd()
-{
-	requestInd++;
-	return requestInd;
-}
+bool steam_gameserver_is_initialised = false;
 
-YYEXPORT void steam_update(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg)
+YYEXPORT void steam_gameserver_update(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg)
 {
-	if (!steam_is_initialised)
+	if (!steam_gameserver_is_initialised)
 	{
 		Result.kind = VALUE_REAL;
 		Result.val = 0;
 		return;
 	}
 
-	SteamAPI_RunCallbacks();
-	Steam_UserStats_Process();
+	SteamGameServer_RunCallbacks();
 
 	Result.kind = VALUE_REAL;
 	Result.val = 1;
 }
-
-bool steam_is_initialised = false;
 
 YYEXPORT void steam_gameserver_init(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg)//(int appid)
 {
-	if (!steam_is_initialised)
-	{
+	uint16 game_port = static_cast<uint16>(YYGetReal(arg, 0));
+	uint16 query_port = static_cast<uint16>(YYGetReal(arg, 1));
+	EServerMode server_mode = static_cast<EServerMode>(YYGetReal(arg, 2));
+	const char* server_version = static_cast<const char*>(YYGetString(arg, 3));
+	
+	//Can not use eServerModeInvalid as a server mode
+	if (server_mode == EServerMode::eServerModeInvalid) {
 		Result.kind = VALUE_REAL;
 		Result.val = 0;
 		return;
 	}
+	
+	// https://partner.steamgames.com/doc/api/steam_gameserver
+	//0x00000000 binds to any avaiable IPV4 Address
 
-	Result.kind = VALUE_REAL;
-	Result.val = 1;
+	Result.kind = VALUE_BOOL;
+
+	Result.val = SteamGameServer_Init(0x00000000, game_port, query_port, server_mode, server_version);
+	steam_gameserver_is_initialised = Result.val;
 }
 
+/*
 void OldPreGraphicsInitialisation()
 {
 	uint32 AppID = static_cast<uint32>(extOptGetReal("Steamworks", "appID"));
@@ -120,56 +123,42 @@ void OldPreGraphicsInitialisation()
 
 	tracef("SteamAPI_Init had succeeded without errors, debug flag = %d", debug ? 1 : 0);
 
-	steam_is_initialised = true;
+	steam_gameserver_is_initialised = true;
 }
+*/
 
-YYEXPORT void steam_initialised(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg)
+YYEXPORT void steam_gameserver_initialised(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg)
 {
 	Result.kind = VALUE_BOOL;
-	Result.val = steam_is_initialised;
+	Result.val = steam_gameserver_is_initialised;
 }
 
-extern "C" void __cdecl SteamAPIDebugTextHook(int nSeverity, const char* pchDebugText)
+extern "C" void __cdecl SteamGameServerDebugTextHook(int nSeverity, const char* pchDebugText)
 {
 	DebugConsoleOutput(pchDebugText);
 	DebugConsoleOutput("\n");
 }
 
-YYEXPORT void steam_set_warning_message_hook(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg)
+YYEXPORT void steam_gameserver_set_warning_message_hook(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg)
 {
-	if (!steam_is_initialised)
+	if (!steam_gameserver_is_initialised)
 	{
 		Result.kind = VALUE_REAL;
 		Result.val = 0;
 		return;
 	}
 
-	SteamClient()->SetWarningMessageHook(&SteamAPIDebugTextHook);
+	SteamGameServerClient()->SetWarningMessageHook(&SteamGameServerDebugTextHook);
 }
 
+/*
 YYEXPORT void steam_is_subscribed(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg)
 {
-
-	if (!steam_is_initialised)
-	{
-		Result.kind = VALUE_REAL;
-		Result.val = 0;
-		return;
-	}
-
-	/*
-	g_SteamContext = new CSteamAPIContext();
-	g_SteamContext->Init();
-	*/
-
-	//Check player has rights to the game.
-	//DebugConsoleOutput("SteamApps()->BIsSubscribed() failed\n");
-	//DebugConsoleOutput("Steam must be running to play this game (user not subscribed)");
-	//!need to shut down steamAPI since we have called SteamAPI_Init()
 
 	Result.kind = VALUE_BOOL;
 	Result.val = SteamApps()->BIsSubscribed();
 }
+*/
 
 
 //YYEXPORT void ext_json_test(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg)
@@ -187,16 +176,16 @@ YYEXPORT void steam_is_subscribed(RValue& Result, CInstance* selfinst, CInstance
 //}
 
 
-YYEXPORT void steam_shutdown(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg)
+YYEXPORT void steam_gameserver_shutdown(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg)
 {
-	if (!steam_is_initialised)
+	if (!steam_gameserver_is_initialised)
 	{
 		Result.kind = VALUE_REAL;
 		Result.val = 0;
 		return;
 	}
 
-	SteamAPI_Shutdown();
+	SteamGameServer_Shutdown();
 }
 
 //dllg void Steam_Json_Test() {
