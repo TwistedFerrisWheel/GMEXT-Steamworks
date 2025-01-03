@@ -13,6 +13,7 @@
 #include "DesktopExtensionTools.h"
 
 bool steam_gameserver_is_initialised = false;
+ISteamGameServer* server = nullptr;
 
 YYEXPORT void steam_gameserver_update(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg)
 {
@@ -35,6 +36,7 @@ YYEXPORT void steam_gameserver_init(RValue& Result, CInstance* selfinst, CInstan
 	uint16 query_port = static_cast<uint16>(YYGetReal(arg, 1));
 	EServerMode server_mode = static_cast<EServerMode>(YYGetReal(arg, 2));
 	const char* server_version = static_cast<const char*>(YYGetString(arg, 3));
+	bool anonymous = YYGetBool(arg, 4);
 	
 	//Can not use eServerModeInvalid as a server mode
 	if (server_mode == EServerMode::eServerModeInvalid) {
@@ -42,13 +44,24 @@ YYEXPORT void steam_gameserver_init(RValue& Result, CInstance* selfinst, CInstan
 		Result.val = 0;
 		return;
 	}
-	
+
 	// https://partner.steamgames.com/doc/api/steam_gameserver
 	//0x00000000 binds to any avaiable IPV4 Address
 
 	Result.kind = VALUE_BOOL;
 
 	Result.val = SteamGameServer_Init(0x00000000, game_port, query_port, server_mode, server_version);
+	//Need to Log In Here
+
+	if (anonymous) {
+		server->LogOnAnonymous();
+	}
+	else {
+		//Can't Figure this one out yet
+		//server->LogOn();
+	}
+		
+
 	steam_gameserver_is_initialised = Result.val;
 }
 
@@ -184,6 +197,12 @@ YYEXPORT void steam_gameserver_shutdown(RValue& Result, CInstance* selfinst, CIn
 		Result.val = 0;
 		return;
 	}
+
+	if (server->BLoggedOn())
+		server->LogOff();
+
+	if (server != nullptr)
+		delete server;
 
 	SteamGameServer_Shutdown();
 }
