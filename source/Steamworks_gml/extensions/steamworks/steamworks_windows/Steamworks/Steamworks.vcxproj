@@ -61,6 +61,7 @@
     <ClCompile Include="..\..\steamworks_cpp\GMLSteam\steam_workshop.cpp" />
     <ClCompile Include="..\..\steamworks_cpp\GMLSteam\steam_timeline.cpp" />
     <ClCompile Include="..\..\steamworks_cpp\pch.cpp" />
+    <ClCompile Include="steam_gameserver_init.cpp" />
     <ClCompile Include="steam_networking_sockets.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

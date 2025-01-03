@@ -93,6 +93,9 @@
     <ClCompile Include="steam_networking_sockets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="steam_gameserver_init.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\steamworks_cpp\DesktopExtensionTools.h">
