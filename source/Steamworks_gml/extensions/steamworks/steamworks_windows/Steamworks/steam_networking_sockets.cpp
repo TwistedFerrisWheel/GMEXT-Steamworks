@@ -7,6 +7,7 @@
 #include "YYRValue.h"
 #include "steam_common.h"
 
+// We started working on this and then realized we needed https://partner.steamgames.com/doc/sdk/api#steam_game_servers
 
 YYEXPORT void steam_netsock_init(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg)//() 
 {
