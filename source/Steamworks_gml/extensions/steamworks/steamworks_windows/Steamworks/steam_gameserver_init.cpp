@@ -35,7 +35,7 @@ YYEXPORT void steam_gameserver_init(RValue& Result, CInstance* selfinst, CInstan
 	uint16 game_port = static_cast<uint16>(YYGetReal(arg, 0));
 	uint16 query_port = static_cast<uint16>(YYGetReal(arg, 1));
 	EServerMode server_mode = static_cast<EServerMode>(YYGetReal(arg, 2));
-	const char* server_version = static_cast<const char*>(YYGetString(arg, 3));
+	const char* server_version = YYGetString(arg, 3);
 	bool anonymous = YYGetBool(arg, 4);
 	
 	//Can not use eServerModeInvalid as a server mode
