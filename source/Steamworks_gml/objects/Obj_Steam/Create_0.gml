@@ -9,5 +9,3 @@ randomize();
 if (steam_initialised()) room_goto(Room_Steam_Main);
 
 handle = -1;
-
-show_message(amaranth_add(10, 20))
