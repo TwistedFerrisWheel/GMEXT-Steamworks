@@ -36,7 +36,6 @@ YYEXPORT void steam_gameserver_init(RValue& Result, CInstance* selfinst, CInstan
 	uint16 query_port = static_cast<uint16>(YYGetReal(arg, 1));
 	EServerMode server_mode = static_cast<EServerMode>(YYGetReal(arg, 2));
 	const char* server_version = YYGetString(arg, 3);
-	bool anonymous = YYGetBool(arg, 4);
 	
 	//Can not use eServerModeInvalid as a server mode
 	if (server_mode == EServerMode::eServerModeInvalid) {
@@ -50,19 +49,24 @@ YYEXPORT void steam_gameserver_init(RValue& Result, CInstance* selfinst, CInstan
 
 	Result.kind = VALUE_BOOL;
 
-	Result.val = SteamGameServer_Init(0x00000000, game_port, query_port, server_mode, server_version);
-	//Need to Log In Here
-
-	if (anonymous) {
-		server->LogOnAnonymous();
-	}
-	else {
-		//Can't Figure this one out yet
-		//server->LogOn();
-	}
-		
+	Result.val = SteamGameServer_Init(0x00000000, game_port, query_port, server_mode, server_version);		
 
 	steam_gameserver_is_initialised = Result.val;
+}
+
+YYEXPORT void steam_gameserver_logon(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg)
+{
+	const char* account_id = YYGetString(arg, 0);
+	server->LogOn(account_id);
+	Result.kind = VALUE_BOOL;
+	Result.val = true;
+}
+
+YYEXPORT void steam_gameserver_logon_anonymous(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg)
+{
+	server->LogOnAnonymous();
+	Result.kind = VALUE_BOOL;
+	Result.val = true;
 }
 
 /*
