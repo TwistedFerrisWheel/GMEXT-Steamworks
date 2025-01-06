@@ -14,6 +14,8 @@
 
 #include "DesktopExtensionTools.h"
 
+// https://partner.steamgames.com/doc/sdk/api#steam_game_servers
+
 bool steam_gameserver_is_initialised = false;
 
 YYEXPORT void steam_gameserver_update(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg)
@@ -107,6 +109,19 @@ YYEXPORT void steam_gameserver_shutdown(RValue& Result, CInstance* selfinst, CIn
 		SteamGameServer()->LogOff();
 
 	SteamGameServer_Shutdown();
+}
+
+YYEXPORT void steam_gameserver_get_IP(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg) {
+
+	SteamIPAddress_t IPAddr = SteamGameServer()->GetPublicIP();
+	if (IPAddr.IsSet()) {
+		Result.kind = VALUE_INT32;
+		Result.val = IPAddr.m_unIPv4;
+	}
+	else {
+		Result.kind = VALUE_INT32;
+		Result.val = 0;
+	}	
 }
 
 //Callbacks
