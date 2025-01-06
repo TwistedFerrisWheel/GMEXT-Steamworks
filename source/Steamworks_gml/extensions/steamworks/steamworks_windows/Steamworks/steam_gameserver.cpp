@@ -109,6 +109,121 @@ YYEXPORT void steam_gameserver_shutdown(RValue& Result, CInstance* selfinst, CIn
 	SteamGameServer_Shutdown();
 }
 
+//Setting Server Data
+
+YYEXPORT void steam_gameserver_set_dedicated(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg) {
+	bool dedicated = YYGetBool(arg, 0);
+	SteamGameServer()->SetDedicatedServer(dedicated);
+	Result.kind = VALUE_BOOL;
+	Result.val = dedicated;
+}
+
+YYEXPORT void steam_gameserver_set_name(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg) {
+	const char* server_name = YYGetString(arg, 0);
+
+	int len = strlen(server_name);
+
+	if (server_name == NULL or server_name == "" or len > k_cbMaxGameServerName) {
+		Result.kind = VALUE_REAL;
+		Result.val = 0;
+		return;
+	}
+
+	SteamGameServer()->SetServerName(server_name);
+	Result.kind = VALUE_REAL;
+	Result.val = 1;
+}
+
+YYEXPORT void steam_gameserver_set_description(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg) {
+	const char* description = YYGetString(arg, 0);
+
+	if (description == NULL or description == "") {
+		Result.kind = VALUE_REAL;
+		Result.val = 0;
+		return;
+	}
+
+	SteamGameServer()->SetGameDescription(description);
+	Result.kind = VALUE_REAL;
+	Result.val = 1;
+}
+
+
+//Usually seperated with semi-colons: https://partner.steamgames.com/doc/api/ISteamGameServer#SetGameTags 
+YYEXPORT void steam_gameserver_set_tags(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg) {
+	const char* tags = YYGetString(arg, 0);
+
+	if (tags == NULL or tags == "") {
+		Result.kind = VALUE_REAL;
+		Result.val = 0;
+		return;
+	}
+
+	SteamGameServer()->SetGameTags(tags);
+	Result.kind = VALUE_REAL;
+	Result.val = 1;
+}
+
+//Don't set this unless it actually changes, its only uploaded to the master once; when acknowledged.
+//Usually seperated with semi-colons: https://partner.steamgames.com/doc/api/ISteamGameServer#SetGameTags 
+YYEXPORT void steam_gameserver_set_game_data(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg) {
+	const char* data = YYGetString(arg, 0);
+
+	if (data == NULL or data == "") {
+		Result.kind = VALUE_REAL;
+		Result.val = 0;
+		return;
+	}
+
+	SteamGameServer()->SetGameData(data);
+	Result.kind = VALUE_REAL;
+	Result.val = 1;
+}
+
+
+//Converting Game ID to String is recommended for this: https://partner.steamgames.com/doc/api/ISteamGameServer#SetProduct
+YYEXPORT void steam_gameserver_set_product(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg) {
+	const char* product = YYGetString(arg, 0);
+
+	if (product == NULL or product == "") {
+		Result.kind = VALUE_REAL;
+		Result.val = 0;
+		return;
+	}
+
+	SteamGameServer()->SetProduct(product);
+	Result.kind = VALUE_REAL;
+	Result.val = 1;
+}
+
+YYEXPORT void steam_gameserver_set_region(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg) {
+	const char* region = YYGetString(arg, 0);
+	SteamGameServer()->SetRegion(region);
+	Result.kind = VALUE_REAL;
+	Result.val = 1;
+}
+
+YYEXPORT void steam_gameserver_set_max_players(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg) {
+	int max_players = YYGetReal(arg, 0);
+
+	if (max_players < 0) {
+		Result.kind = VALUE_REAL;
+		Result.val = 0;
+		return;
+	}
+
+	SteamGameServer()->SetMaxPlayerCount(max_players);
+	Result.kind = VALUE_REAL;
+	Result.val = 1;
+}
+
+YYEXPORT void steam_gameserver_set_password_protected(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg) {
+	bool pswd_locked = YYGetBool(arg, 0);
+	SteamGameServer()->SetPasswordProtected(pswd_locked);
+	Result.kind = VALUE_BOOL;
+	Result.val = pswd_locked;
+}
+
 //Callbacks
 void steam_net_callbacks_t::steam_server_connected(SteamServersConnected_t* s) {
 	steam_net_event ev = steam_net_event((char*)"server_connected");
