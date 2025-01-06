@@ -93,7 +93,7 @@
     <ClCompile Include="steam_networking_sockets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="steam_gameserver_init.cpp">
+    <ClCompile Include="steam_gameserver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

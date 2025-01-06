@@ -21,7 +21,10 @@ public:
 	STEAM_CALLBACK(steam_net_callbacks_t, steam_inventory_definition_update, SteamInventoryDefinitionUpdate_t);
 	STEAM_CALLBACK(steam_net_callbacks_t, avatar_image_loaded, AvatarImageLoaded_t);
 	STEAM_CALLBACK(steam_net_callbacks_t, steam_music_volume_has_changed, VolumeHasChanged_t);
-	STEAM_CALLBACK(steam_net_callbacks_t, steam_music_playback_status_has_changed, PlaybackStatusHasChanged_t);
+	STEAM_GAMESERVER_CALLBACK(steam_net_callbacks_t, steam_music_playback_status_has_changed, PlaybackStatusHasChanged_t);
+	STEAM_GAMESERVER_CALLBACK(steam_net_callbacks_t, steam_server_connected, SteamServersConnected_t);
+	STEAM_GAMESERVER_CALLBACK(steam_net_callbacks_t, steam_server_connect_failed, SteamServerConnectFailure_t);
+	STEAM_GAMESERVER_CALLBACK(steam_net_callbacks_t, steam_server_disconnected, SteamServersDisconnected_t);
 
 	void lobby_list_received(LobbyMatchList_t* e, bool failed);
 	void lobby_created(LobbyCreated_t* e, bool failed);
