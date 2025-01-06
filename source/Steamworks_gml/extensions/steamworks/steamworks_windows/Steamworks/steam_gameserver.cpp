@@ -121,9 +121,10 @@ YYEXPORT void steam_gameserver_get_IP(RValue& Result, CInstance* selfinst, CInst
 	else {
 		Result.kind = VALUE_INT32;
 		Result.val = 0;
-	}	
-//Setting Server Data
+	}
+}
 
+//Setting Server Data
 YYEXPORT void steam_gameserver_set_dedicated(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg) {
 	bool dedicated = YYGetBool(arg, 0);
 	SteamGameServer()->SetDedicatedServer(dedicated);
