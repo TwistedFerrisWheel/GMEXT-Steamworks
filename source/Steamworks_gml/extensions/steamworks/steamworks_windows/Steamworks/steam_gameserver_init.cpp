@@ -13,7 +13,6 @@
 #include "DesktopExtensionTools.h"
 
 bool steam_gameserver_is_initialised = false;
-ISteamGameServer* server = nullptr;
 
 YYEXPORT void steam_gameserver_update(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg)
 {
@@ -48,7 +47,6 @@ YYEXPORT void steam_gameserver_init(RValue& Result, CInstance* selfinst, CInstan
 	//0x00000000 binds to any avaiable IPV4 Address
 
 	Result.kind = VALUE_BOOL;
-
 	Result.val = SteamGameServer_Init(0x00000000, game_port, query_port, server_mode, server_version);		
 
 	steam_gameserver_is_initialised = Result.val;
@@ -57,14 +55,14 @@ YYEXPORT void steam_gameserver_init(RValue& Result, CInstance* selfinst, CInstan
 YYEXPORT void steam_gameserver_logon(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg)
 {
 	const char* account_id = YYGetString(arg, 0);
-	server->LogOn(account_id);
+	SteamGameServer()->LogOn(account_id);
 	Result.kind = VALUE_BOOL;
 	Result.val = true;
 }
 
 YYEXPORT void steam_gameserver_logon_anonymous(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg)
 {
-	server->LogOnAnonymous();
+	SteamGameServer()->LogOnAnonymous();
 	Result.kind = VALUE_BOOL;
 	Result.val = true;
 }
@@ -202,11 +200,8 @@ YYEXPORT void steam_gameserver_shutdown(RValue& Result, CInstance* selfinst, CIn
 		return;
 	}
 
-	if (server->BLoggedOn())
-		server->LogOff();
-
-	if (server != nullptr)
-		delete server;
+	if (SteamGameServer()->BLoggedOn())
+		SteamGameServer()->LogOff();
 
 	SteamGameServer_Shutdown();
 }
