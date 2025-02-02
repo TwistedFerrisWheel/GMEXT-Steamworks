@@ -143,7 +143,7 @@ YYEXPORT void steam_gameserver_set_dedicated(RValue& Result, CInstance* selfinst
 	Result.val = dedicated;
 }
 
-YYEXPORT void steam_gameserver_advertise_server(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg) {
+YYEXPORT void steam_gameserver_set_advertise(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg) {
 	bool active = YYGetBool(arg, 0);
 	SteamGameServer()->SetAdvertiseServerActive(active);
 	Result.kind = VALUE_REAL;
