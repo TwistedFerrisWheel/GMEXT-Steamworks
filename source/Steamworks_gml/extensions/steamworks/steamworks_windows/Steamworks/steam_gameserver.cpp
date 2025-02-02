@@ -124,6 +124,11 @@ YYEXPORT void steam_gameserver_get_IP(RValue& Result, CInstance* selfinst, CInst
 	}
 }
 
+YYEXPORT void steam_gameserver_get_ID(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg) {
+	Result.kind = VALUE_INT64;
+	Result.val = SteamGameServer()->GetSteamID().ConvertToUint64();
+}
+
 //Setting Server Data
 YYEXPORT void steam_gameserver_set_dedicated(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg) {
 	bool dedicated = YYGetBool(arg, 0);
