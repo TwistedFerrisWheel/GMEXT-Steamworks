@@ -137,7 +137,7 @@ YYEXPORT void steam_gameserver_set_dedicated(RValue& Result, CInstance* selfinst
 	Result.val = dedicated;
 }
 
-YYEXPORT void steam_gameserver_enable_heartbeats(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg) {
+YYEXPORT void steam_gameserver_advertise_server(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg) {
 	bool active = YYGetBool(arg, 0);
 	SteamGameServer()->SetAdvertiseServerActive(active);
 	Result.kind = VALUE_REAL;
@@ -156,6 +156,22 @@ YYEXPORT void steam_gameserver_set_name(RValue& Result, CInstance* selfinst, CIn
 	}
 
 	SteamGameServer()->SetServerName(server_name);
+	Result.kind = VALUE_REAL;
+	Result.val = 1;
+}
+
+YYEXPORT void steam_gameserver_set_map(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg) {
+	const char* map_name = YYGetString(arg, 0);
+
+	int len = strlen(map_name);
+
+	if (map_name == NULL or map_name == "" or len > k_cbMaxGameServerMapName) {
+		Result.kind = VALUE_REAL;
+		Result.val = 0;
+		return;
+	}
+
+	SteamGameServer()->SetMapName(map_name);
 	Result.kind = VALUE_REAL;
 	Result.val = 1;
 }
