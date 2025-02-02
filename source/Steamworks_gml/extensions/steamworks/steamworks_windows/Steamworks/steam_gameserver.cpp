@@ -111,6 +111,12 @@ YYEXPORT void steam_gameserver_shutdown(RValue& Result, CInstance* selfinst, CIn
 	SteamGameServer_Shutdown();
 }
 
+YYEXPORT void steam_gameserver_is_loggedOn(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg)
+{
+	Result.kind = VALUE_BOOL;
+	Result.val = SteamGameServer()->BLoggedOn();
+}
+
 YYEXPORT void steam_gameserver_get_IP(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg) {
 
 	SteamIPAddress_t IPAddr = SteamGameServer()->GetPublicIP();
