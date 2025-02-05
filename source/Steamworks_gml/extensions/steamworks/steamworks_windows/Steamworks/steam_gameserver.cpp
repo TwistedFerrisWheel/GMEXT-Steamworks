@@ -182,6 +182,22 @@ YYEXPORT void steam_gameserver_set_map(RValue& Result, CInstance* selfinst, CIns
 	Result.val = 1;
 }
 
+YYEXPORT void steam_gameserver_set_mod_dir(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg) {
+	const char* mod_dir = YYGetString(arg, 0);
+
+	int len = strlen(mod_dir);
+
+	if (mod_dir == NULL or mod_dir == "" or len > k_cbMaxGameServerGameDir) {
+		Result.kind = VALUE_REAL;
+		Result.val = 0;
+		return;
+	}
+
+	SteamGameServer()->SetModDir(mod_dir);
+	Result.kind = VALUE_REAL;
+	Result.val = 1;
+}
+
 YYEXPORT void steam_gameserver_set_description(RValue& Result, CInstance* selfinst, CInstance* otherinst, int argc, RValue* arg) {
 	const char* description = YYGetString(arg, 0);
 
